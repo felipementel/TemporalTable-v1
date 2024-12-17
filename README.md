@@ -1,4 +1,6 @@
-# EntityFramework Commands
+# Temporal Tables
+
+![Banner](./docs/banner.png)
 
 ## EF Core
 
@@ -16,7 +18,7 @@ dotnet tool install --global dotnet-ef
 
 ```
 
-````bash
+```bash
 $env:MigrationName  = "InitDatabaseCommit";
 ```
 
@@ -31,19 +33,16 @@ add $env:MigrationName `
 
 ```
 
-
-dotnet ef database `
-update $env:MigrationName `
--s ./src/PoC.TempTables.EF `
--p ./src/PoC.TempTables.EF `
+dotnet ef database `update $env:MigrationName`
+-s ./src/PoC.TempTables.EF `-p ./src/PoC.TempTables.EF`
 -c PoC.TempTables.EF.Infra.Database.DeployDbContext `
 -v
 
 ```
 
 ```
-dotnet ef migrations script `
---project ./src/PoC.TempTables.EF `
+
+dotnet ef migrations script `--project ./src/PoC.TempTables.EF`
 -o ./src/PoC.TempTables.EF/Migrations/SQL/$env:MigrationName.sql
 
 ```
@@ -53,8 +52,10 @@ Connection String
 ```
 
 Server=tcp:azuresqledge.database.windows.net,1433;Initial Catalog=daploy-ef-analizer;Persist Security Info=False;User ID=felipementel;Password=Abcd1234%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
 ```
-````
+
+```
 
 ## Docker - SQL Edge
 
