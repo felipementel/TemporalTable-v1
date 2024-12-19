@@ -75,7 +75,6 @@ namespace PoC.TempTables.EF
             // Data Manipulation Language (DML) - Manipula os dados
             //SELECT, INSERT, UPDATE, DELETE
 
-
               // Pessoas
             var user = new Microsoft.Data.SqlClient.SqlParameter("Nome", "CANAL DEPLOY");
             var pessoa1 = dbContext.Pessoas
