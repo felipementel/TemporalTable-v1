@@ -5,7 +5,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<UserSecretsId>7f36bbaf-f9a7-4227-9768-f5c57f3de720</UserSecretsId>
+		<UserSecretsId>Temporal-Tables</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,18 +20,18 @@
 
 	<ItemGroup>
 		<PackageReference Include="Bogus" Version="35.6.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
