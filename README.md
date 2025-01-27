@@ -2,7 +2,7 @@
 
 ![Banner](./docs/banner.png)
 
-## EF Core
+## Docs EF Core
 
 ```
 https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables?view=sql-server-ver16
@@ -12,12 +12,16 @@ https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-table
 https://learn.microsoft.com/en-us/ef/core/providers/sql-server/temporal-tables
 ```
 
-```bash
-
-dotnet tool install --global dotnet-ef
-
+```
+https://devblogs.microsoft.com/dotnet/prime-your-flux-capacitor-sql-server-temporal-tables-in-ef-core-6-0/
 ```
 
+## Pre req
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+## Commands
 ```bash
 $env:MigrationName  = "InitDatabaseCommit";
 ```
@@ -30,35 +34,27 @@ add $env:MigrationName `
 --context PoC.TempTables.EF.Infra.Database.DeployDbContext  `
 --output-dir Migrations/EF  `
 --verbose
-
 ```
-
+```
 dotnet ef database `update $env:MigrationName`
 -s ./src/PoC.TempTables.EF `-p ./src/PoC.TempTables.EF`
 -c PoC.TempTables.EF.Infra.Database.DeployDbContext `
 -v
-
 ```
 
-```
 
+```
 dotnet ef migrations script `--project ./src/PoC.TempTables.EF`
 -o ./src/PoC.TempTables.EF/Migrations/SQL/$env:MigrationName.sql
-
 ```
 
-Connection String
-
+## Connection String
 ```
-
 Server=tcp:azuresqledge.database.windows.net,1433;Initial Catalog=daploy-ef-analizer;Persist Security Info=False;User ID=felipementel;Password=Abcd1234%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-
 ```
 
-```
 
 ## Docker - SQL Edge
-
 ```
 https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
 ```
@@ -90,7 +86,7 @@ mcr.microsoft.com/azure-sql-edge
 ```
 
 <details>
-<summary>Comandos utilizados</summary>
+<summary>SQL EDGE</summary>
 <p>
 
 #### Show Paths Button
@@ -112,9 +108,6 @@ SELECT name from sys.databases;
 </p>
 </details>
 
-```
-
-```
 
 ```
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GetMostPopularBlogsByName')
