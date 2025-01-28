@@ -1,6 +1,18 @@
+-- TO DELETE ALL
+ALTER TABLE [dbo].[Contratos] SET (SYSTEM_VERSIONING = OFF);
+ALTER TABLE [dbo].[Pessoas] SET (SYSTEM_VERSIONING = OFF);
+
+DROP TABLE [dbo].[ContratosHistory]
+DROP TABLE [dbo].[HistoricoTabelaPessoa]
+
+DROP TABLE [dbo].[Contratos]
+DROP TABLE [dbo].[Pessoas]
+
+DROP TABLE [dbo].[_ControleMigracoes]
+
+--######################################
+
 SELECT TOP 1 ContratoId FROM Contratos ORDER BY CreatedAt DESC
-
-
 
 DECLARE @ContratoIdLocal UNIQUEIDENTIFIER;
 
@@ -44,20 +56,6 @@ WHERE
 -- #########
 
 SELECT * FROM PessoasHistory
-
-
---- $$$$$$$$$$$$$$$$$$
-ALTER TABLE [dbo].[Contratos] SET (SYSTEM_VERSIONING = OFF);
-ALTER TABLE [dbo].[Pessoas] SET (SYSTEM_VERSIONING = OFF);
-
-DROP TABLE [dbo].[ContratosHistory]
-DROP TABLE [dbo].[HistoricoTabelaPessoa]
-
-DROP TABLE [dbo].[Contratos]
-DROP TABLE [dbo].[Pessoas]
-
-DROP TABLE [dbo].[_ControleMigracoes]
-
 
 
 SELECT

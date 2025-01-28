@@ -3,13 +3,11 @@
 public class Contrato : BaseEntity<Guid>
 {
     public Contrato(Guid id,
-        DateTime createdAt,
-        DateTime updatedAt,
         long numero,
         DateOnly dataInicio,
         DateOnly dataFim,
         bool ativo)
-        : base(id, createdAt, updatedAt)
+        : base(id)
     {
         Numero = numero;
         DataInicio = dataInicio;

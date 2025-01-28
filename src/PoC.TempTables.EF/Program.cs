@@ -10,64 +10,64 @@ namespace PoC.TempTables.EF
     {
         static async Task Main(string[] args)
         {
-            int qtdContratos = 3;
-            int qtdPessoas = 2;
-
-            var contratoFaker = new Bogus.Faker<Contrato>(locale: "pt_BR")
-                           .CustomInstantiator(f =>
-                           {
-                               return new Contrato(
-                                   id: f.Random.Guid(),
-                                   createdAt: DateTime.Now.ToUniversalTime(),
-                                   updatedAt: DateTime.Now.ToUniversalTime(),
-                                   numero: f.Random.Long(int.MinValue, int.MaxValue),
-                                   dataInicio: f.Date.RecentDateOnly(),
-                                   dataFim: f.Date.FutureDateOnly(),
-                                   ativo: f.Random.Bool()
-                               );
-                           }).FinishWith((f, u) =>
-                           {
-                               Console.WriteLine("Contrato criado com id {0}", u.Id);
-                           })
-                           .Generate(qtdContratos);
-
-            var PessoaFaker =
-                new Faker<Pessoa>(locale: "pt_BR").CustomInstantiator(p =>
-                {
-                    return new Pessoa(
-                        p.Random.Guid(),
-                        createdAt: DateTime.Now.ToUniversalTime(),
-                        DateTime.Now.ToUniversalTime(),
-                        p.Person.FullName,
-                        p.Person.Email,
-                        p.Person.Phone,
-                        p.Person.Cpf(),
-                        p.Person.Address.Street,
-                        p.Date.PastDateOnly()
-                    );
-                }).FinishWith((f, u) =>
-                {
-                    Console.WriteLine("Pessoa criado com id {0}", u.Id);
-                })
-                .Generate(qtdPessoas);
-
             using DeployDbContext dbContext = new();
 
-            dbContext.Pessoas.AddRange(PessoaFaker);
-            await dbContext.SaveChangesAsync();
+            bool createItens = false;
 
-            dbContext.Contratos.AddRange(contratoFaker);
-            await dbContext.SaveChangesAsync();
+            if (createItens)
+            {
+                int qtdContratos = 3;
+                int qtdPessoas = 2;
 
-            // Live ate esse ponto
+                var contratoFaker = new Bogus.Faker<Contrato>(locale: "pt_BR")
+                               .CustomInstantiator(f =>
+                               {
+                                   return new Contrato(
+                                       id: f.Random.Guid(),
+                                       numero: f.Random.Long(int.MinValue, int.MaxValue),
+                                       dataInicio: f.Date.RecentDateOnly(),
+                                       dataFim: f.Date.FutureDateOnly(),
+                                       ativo: f.Random.Bool()
+                                   );
+                               }).FinishWith((f, u) =>
+                               {
+                                   Console.WriteLine("Contrato criado com id {0}", u.Id);
+                               })
+                               .Generate(qtdContratos);
 
+                var PessoaFaker =
+                    new Faker<Pessoa>(locale: "pt_BR").CustomInstantiator(p =>
+                    {
+                        return new Pessoa(
+                            p.Random.Guid(),
+                            p.Person.FullName,
+                            p.Person.Email,
+                            p.Person.Phone,
+                            p.Person.Cpf(),
+                            p.Person.Address.Street,
+                            p.Date.PastDateOnly()
+                        );
+                    }).FinishWith((f, u) =>
+                    {
+                        Console.WriteLine("Pessoa criado com id {0}", u.Id);
+                    })
+                    .Generate(qtdPessoas);
+
+                dbContext.Pessoas.AddRange(PessoaFaker);
+                await dbContext.SaveChangesAsync();
+
+                dbContext.Contratos.AddRange(contratoFaker);
+                await dbContext.SaveChangesAsync();
+
+                // Live ate esse ponto
+            }
             var position = 0;
 
-            var nextPage = dbContext.Pessoas
-                .OrderBy(b => b.CreatedAt)
+            var nextPage = await dbContext.Pessoas
+                .OrderBy(b => b.DataNascimento)
                 .Skip(position * 10)
                 .Take(10)
-                .ToList();
+                .ToListAsync();
 
             //Data Definition Language (DDL) - Manipula a estrutura do banco de dados
             //CREATE, ALTER, DROP, TRUNCATE
@@ -87,8 +87,17 @@ namespace PoC.TempTables.EF
             TemporalContainedIn: : Retorna todas as linhas que começaram a ser ativas e terminaram a ser ativas entre dois horários UTC fornecidos. Podem ser muitas linhas da tabela de histórico para uma determinada chave primária.
             */
 
-            dbContext.Pessoas.TemporalAll().Single(product => product.Nome.Contains("CANAL"));
+            //Select first and update name
 
+
+            var itemPessoa = await dbContext
+            .Pessoas
+            .TemporalAll()
+            .FirstOrDefaultAsync();
+
+            itemPessoa!.SetNewName("Canal DEPLOY");
+
+            await dbContext.SaveChangesAsync();
 
 
             //// Pessoas

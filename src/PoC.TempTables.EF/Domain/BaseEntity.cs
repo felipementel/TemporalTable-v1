@@ -5,8 +5,8 @@ public abstract class BaseEntity<Tid>
     protected BaseEntity(Tid id, DateTime? createdAt, DateTime? updatedAt)
     {
         Id = id;
-        CreatedAt = createdAt ?? DateTime.Now.ToUniversalTime();
-        UpdatedAt = updatedAt ?? DateTime.Now.ToUniversalTime();
+        //CreatedAt = createdAt ?? DateTime.Now.ToUniversalTime();
+        //UpdatedAt = updatedAt ?? DateTime.Now.ToUniversalTime();
     }
 
     protected BaseEntity(Tid id)
@@ -16,7 +16,7 @@ public abstract class BaseEntity<Tid>
 
     public Tid Id { get; init; }
 
-    public DateTime CreatedAt { get; init; }
+    //public DateTime CreatedAt { get; init; }
 
-    public DateTime UpdatedAt { get; init; }
+    //public DateTime UpdatedAt { get; init; }
 }

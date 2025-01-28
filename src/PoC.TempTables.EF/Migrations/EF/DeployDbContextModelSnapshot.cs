@@ -17,7 +17,7 @@ namespace PoC.TempTables.EF.Migrations.EF
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,10 +33,6 @@ namespace PoC.TempTables.EF.Migrations.EF
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit")
                         .HasColumnName("Ativo");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
 
                     b.Property<DateOnly>("DataFim")
                         .HasColumnType("date")
@@ -63,10 +59,6 @@ namespace PoC.TempTables.EF.Migrations.EF
                     b.Property<Guid?>("PessoaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("UpdatedAt");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PessoaId");
@@ -90,10 +82,6 @@ namespace PoC.TempTables.EF.Migrations.EF
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PessoaId");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
 
                     b.Property<DateOnly>("DataNascimento")
                         .HasColumnType("date");
@@ -122,10 +110,6 @@ namespace PoC.TempTables.EF.Migrations.EF
                     b.Property<string>("Telefone")
                         .IsRequired()
                         .HasColumnType("VARCHAR(100)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("UpdatedAt");
 
                     b.Property<DateTime>("fim")
                         .ValueGeneratedOnAddOrUpdate()

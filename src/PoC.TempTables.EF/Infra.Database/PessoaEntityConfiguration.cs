@@ -38,17 +38,5 @@ public class PessoaEntityConfiguration : IEntityTypeConfiguration<Pessoa>
         builder.Property(p => p.DataNascimento)
             .HasColumnType("date")
             .IsRequired();
-
-        builder
-            .Property(x => x.CreatedAt)
-            .HasColumnName("CreatedAt")
-            .HasColumnType("datetime")
-            .IsRequired();
-
-        builder
-            .Property(x => x.UpdatedAt)
-            .HasColumnName("UpdatedAt")
-            .HasColumnType("datetime")
-            .IsRequired();
     }
 }

@@ -3,15 +3,13 @@
 public class Pessoa : BaseEntity<Guid>
 {
     public Pessoa(Guid id,
-        DateTime createdAt,
-        DateTime updatedAt,
         string nome,
         string email,
         string telefone,
         string documento,
         string endereco,
         DateOnly dataNascimento)
-        : base(id, createdAt, updatedAt)
+        : base(id)
     {
         Nome = nome;
         Email = email;
@@ -21,9 +19,9 @@ public class Pessoa : BaseEntity<Guid>
         DataNascimento = dataNascimento;
     }
 
-    public string Nome { get; init; }
+    public string Nome { get; private set; }
 
-    public string Email { get; init; }
+    public string Email { get; private set; }
 
     public string Telefone { get; init; }
 
@@ -34,4 +32,25 @@ public class Pessoa : BaseEntity<Guid>
     public DateOnly DataNascimento { get; init; }
 
     public List<Contrato> Contratos { get; set; }
+
+    public void AddContrato(Contrato contrato)
+    {
+        Contratos ??= new List<Contrato>();
+        Contratos.Add(contrato);
+    }
+
+    public void RemoveContrato(Contrato contrato)
+    {
+        Contratos?.Remove(contrato);
+    }
+
+    public void SetNewName(string newName)
+    {
+        Nome = newName;
+    }
+
+    public void SetNewEmail(string newEmail)
+    {
+        Email = newEmail;
+    }
 }

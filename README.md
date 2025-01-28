@@ -17,11 +17,13 @@ https://devblogs.microsoft.com/dotnet/prime-your-flux-capacitor-sql-server-tempo
 ```
 
 ## Pre req
+
 ```bash
 dotnet tool install --global dotnet-ef
 ```
 
 ## Commands
+
 ```bash
 $env:MigrationName  = "InitDatabaseCommit";
 ```
@@ -35,13 +37,15 @@ add $env:MigrationName `
 --output-dir Migrations/EF  `
 --verbose
 ```
+
 ```
-dotnet ef database `update $env:MigrationName`
--s ./src/PoC.TempTables.EF `-p ./src/PoC.TempTables.EF`
+dotnet ef database `
+update $env:MigrationName `
+-s ./src/PoC.TempTables.EF `
+-p ./src/PoC.TempTables.EF `
 -c PoC.TempTables.EF.Infra.Database.DeployDbContext `
 -v
 ```
-
 
 ```
 dotnet ef migrations script `--project ./src/PoC.TempTables.EF`
@@ -49,12 +53,13 @@ dotnet ef migrations script `--project ./src/PoC.TempTables.EF`
 ```
 
 ## Connection String
-```
-Server=tcp:azuresqledge.database.windows.net,1433;Initial Catalog=daploy-ef-analizer;Persist Security Info=False;User ID=felipementel;Password=Abcd1234%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-```
 
+```
+Server=tcp:sql-canal-deploy.database.windows.net,1433;Initial Catalog=sql-temporal-tables-canal-deploy2;Persist Security Info=False;User ID=felipementel;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+```
 
 ## Docker - SQL Edge
+
 ```
 https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
 ```
@@ -107,7 +112,6 @@ SELECT name from sys.databases;
 
 </p>
 </details>
-
 
 ```
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GetMostPopularBlogsByName')
