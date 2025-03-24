@@ -2,64 +2,65 @@
 
 ![Banner](./docs/banner.png)
 
-## Docs EF Core
-
-```
-https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables?view=sql-server-ver16
-```
-
-```
-https://learn.microsoft.com/en-us/ef/core/providers/sql-server/temporal-tables
-```
-
-```
-https://devblogs.microsoft.com/dotnet/prime-your-flux-capacitor-sql-server-temporal-tables-in-ef-core-6-0/
-```
-
 ## Pre req
-
 ```bash
 dotnet tool install --global dotnet-ef
 ```
 
 ## Commands
-
 ```bash
 $env:MigrationName  = "InitDatabaseCommit";
 ```
 
+Criação do arquivo de Migration
 ```
 dotnet ef migrations `
 add $env:MigrationName `
---startup-project ./src/PoC.TempTables.EF  `
---project ./src/PoC.TempTables.EF  `
---context PoC.TempTables.EF.Infra.Database.DeployDbContext  `
---output-dir Migrations/EF  `
+--startup-project ./src/DEPLOY.TemporalTables.EF `
+--project ./src/DEPLOY.TemporalTables.EF `
+--context DEPLOY.TemporalTables.EF.Infra.Database.Persistence.DeployDbContext `
+--output-dir Migrations/EF `
 --verbose
 ```
 
+Aplicando o arquivo de Migration gerado
 ```
 dotnet ef database `
 update $env:MigrationName `
--s ./src/PoC.TempTables.EF `
--p ./src/PoC.TempTables.EF `
--c PoC.TempTables.EF.Infra.Database.DeployDbContext `
+-s ./src/DEPLOY.TemporalTables.EF `
+-p ./src/DEPLOY.TemporalTables.EF `
+-c DEPLOY.TemporalTables.EF.Infra.Database.Persistence.DeployDbContext `
 -v
 ```
 
+
 ```
-dotnet ef migrations script `--project ./src/PoC.TempTables.EF`
--o ./src/PoC.TempTables.EF/Migrations/SQL/$env:MigrationName.sql
+dotnet ef migrations script `--project ./src/DEPLOY.TemporalTables.EF`
+-o ./src/DEPLOY.TemporalTables.EF/Migrations/SQL/$env:MigrationName.sql
 ```
+
+## Como deletar as tabelas criadas
+
+````sql
+ALTER TABLE [dbo].[Contratos] SET (SYSTEM_VERSIONING = OFF);
+ALTER TABLE [dbo].[Pessoas] SET (SYSTEM_VERSIONING = OFF);
+
+DROP TABLE [dbo].[ContratosHistory]
+DROP TABLE [dbo].[HistoricoTabelaPessoa]
+
+DROP TABLE [dbo].[Contratos]
+DROP TABLE [dbo].[Pessoas]
+
+DROP TABLE [dbo].[_ControleMigracoes]
+````
 
 ## Connection String
+```
+Server=tcp:azuresqledge.database.windows.net,1433;Initial Catalog=daploy-ef-analizer;Persist Security Info=False;User ID=felipementel;Password=Abcd1234%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+```
 
-```
-Server=tcp:sql-canal-deploy.database.windows.net,1433;Initial Catalog=sql-temporal-tables-canal-deploy2;Persist Security Info=False;User ID=felipementel;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-```
 
 ## Docker - SQL Edge
-
 ```
 https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
 ```
@@ -113,6 +114,7 @@ SELECT name from sys.databases;
 </p>
 </details>
 
+
 ```
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GetMostPopularBlogsByName')
 BEGIN
@@ -148,4 +150,18 @@ END;
 
 -- EXECUTE dbo.GetMostPopularBlogsByName @filterByUser=CANAL
 
+```
+
+## Docs EF Core
+
+```
+https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables?view=sql-server-ver16
+```
+
+```
+https://learn.microsoft.com/en-us/ef/core/providers/sql-server/temporal-tables
+```
+
+```
+https://devblogs.microsoft.com/dotnet/prime-your-flux-capacitor-sql-server-temporal-tables-in-ef-core-6-0/
 ```
