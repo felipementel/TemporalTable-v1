@@ -33,5 +33,5 @@ public class Pessoa : BaseEntity<Guid>
 
     public DateOnly DataNascimento { get; init; }
 
-    public List<Contrato> Contratos { get; set; }
+    public List<Contrato>? Contratos { get; set; }
 }

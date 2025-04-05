@@ -24,7 +24,7 @@ namespace DEPLOY.TemporalTables.EF
                     );
                 }).FinishWith((f, u) =>
                 {
-                    Console.WriteLine("Contrato criado com id {0}", u.Id);
+                    System.Console.WriteLine("Contrato criado com id {0}", u.Id);
                 })
                 .Generate(3);
 
@@ -44,7 +44,7 @@ namespace DEPLOY.TemporalTables.EF
                     );
                 }).FinishWith((f, u) =>
                 {
-                    Console.WriteLine("Pessoa criado com id {0}", u.Id);
+                    System.Console.WriteLine("Pessoa criado com id {0}", u.Id);
                 })
                 .Generate(2);
 
@@ -77,7 +77,7 @@ namespace DEPLOY.TemporalTables.EF
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.Message);
             }
 
             //O EF Core suporta vários operadores de consulta de tabela temporal:

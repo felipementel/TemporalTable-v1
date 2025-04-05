@@ -23,14 +23,14 @@ public class DeployDbContext : DbContext
         IConfigurationRoot configuration = builder.Build();
 
         optionsBuilder
-            .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            .UseSqlServer(configuration.GetConnectionString("DEPLOYConnection"),
                 p => p.EnableRetryOnFailure(
                         maxRetryCount: 20,
                         maxRetryDelay: TimeSpan.FromSeconds(3),
                         errorNumbersToAdd: null)
             .MigrationsHistoryTable("_ControleMigracoes", "dbo"))
             .EnableSensitiveDataLogging() // habilita os parametros das instrucoes sql
-            .LogTo(Console.WriteLine, LogLevel.Debug);
+            .LogTo(System.Console.WriteLine, LogLevel.Debug);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
