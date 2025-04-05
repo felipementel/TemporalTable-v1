@@ -1,7 +1,6 @@
 ﻿using Bogus;
 using Bogus.Extensions.Brazil;
 using DEPLOY.TemporalTables.EF.Domain;
-using DEPLOY.TemporalTables.EF.Infra.Database;
 using DEPLOY.TemporalTables.EF.Infra.Database.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,8 +56,6 @@ namespace DEPLOY.TemporalTables.EF
             dbContext.Contratos.AddRange(contratoFaker);
             await dbContext.SaveChangesAsync();
 
-            // Live ate esse ponto
-
             var position = 0;
 
             var nextPage = dbContext.Pessoas
@@ -93,7 +90,7 @@ namespace DEPLOY.TemporalTables.EF
             .SingleOrDefaultAsync(p => p.Nome.Contains(PessoaFaker[0].Nome));
 
 
-            /*TemporalAll:    Retorna todas as linhas nos dados históricos. 
+            /*TemporalAll:  Retorna todas as linhas nos dados históricos. 
                             Normalmente, são muitas linhas da tabela de histórico para uma
                             determinada chave primária.*/
 
@@ -102,7 +99,7 @@ namespace DEPLOY.TemporalTables.EF
             .Where(p => p.Nome.Contains(PessoaFaker[0].Nome));
 
             /*TemporalFromTo: Retorna todas as linhas que estavam ativas entre dois horários UTC fornecidos.
-                            Podem ser muitas linhas da tabela de histórico para uma determinada chave primária.*/
+                              Podem ser muitas linhas da tabela de histórico para uma determinada chave primária.*/
 
             var PessoaTemporalFromTo = await dbContext.Pessoas
             .TemporalFromTo(DateTime.UtcNow, DateTime.UtcNow)
@@ -110,16 +107,16 @@ namespace DEPLOY.TemporalTables.EF
 
 
             /*TemporalBetween: O mesmo que TemporalFromTo, exceto que as linhas
-                            incluídas se tornaram ativas no limite superior.*/
+                               Incluídas se tornaram ativas no limite superior.*/
 
             var PessoaTemporalBetween = await dbContext.Pessoas
             .TemporalBetween(DateTime.UtcNow, DateTime.UtcNow)
             .SingleAsync(product => product.Nome.Contains(PessoaFaker[0].Nome));
 
 
-            /*TemporalContainedIn: : Retorna todas as linhas que começaram a ser ativas e terminaram a ser ativas 
-                            entre dois horários UTC fornecidos. Podem ser muitas linhas da tabela de histórico 
-                            para uma determinada chave primária.*/
+            /*TemporalContainedIn:: Retorna todas as linhas que começaram a ser ativas e terminaram a ser ativas 
+                                    entre dois horários UTC fornecidos. Podem ser muitas linhas da tabela de histórico 
+                                    para uma determinada chave primária.*/
 
             var PessoaTemporalContainedIn = await dbContext.Pessoas
             .TemporalContainedIn(DateTime.UtcNow, DateTime.UtcNow)
